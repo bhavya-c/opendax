@@ -60,6 +60,22 @@ services:
     - VAULT_TOKEN=${PEATIO_MATCHING_VAULT_TOKEN}
     command: bash -c "bin/link_config && bundle exec ruby lib/daemons/amqp_daemon.rb matching"
 
+  matching_btcusdc:
+    << : *peatio-daemon
+    environment:
+    - VAULT_TOKEN=${PEATIO_MATCHING_VAULT_TOKEN}
+    command: bash -c "bin/link_config && bundle exec ruby lib/daemons/amqp_daemon.rb matching --include=btcusdc"
+  matching_ethusdc_dotusdc:
+    << : *peatio-daemon
+    environment:
+    - VAULT_TOKEN=${PEATIO_MATCHING_VAULT_TOKEN}
+    command: bash -c "bin/link_config && bundle exec ruby lib/daemons/amqp_daemon.rb matching --include=ethusdc,dotusdc"
+  matching_rest:
+    << : *peatio-daemon
+    environment:
+    - VAULT_TOKEN=${PEATIO_MATCHING_VAULT_TOKEN}
+    command: bash -c "bin/link_config && bundle exec ruby lib/daemons/amqp_daemon.rb matching --exclude=btcusdc,ethusdc,dotusdc"
+
   order_processor:
     << : *peatio-daemon
     environment:
